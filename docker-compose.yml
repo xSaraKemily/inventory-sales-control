@@ -1,0 +1,59 @@
+version: "3"
+
+services:
+    # project image
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: no
+        working_dir: /var/www/
+        command: bash -c "chown -R www-data:www-data /var/www/storage && chmod -R 775 /var/www/storage && php-fpm"
+        volumes:
+            - ./:/var/www
+        networks:
+            - laravel
+
+    # nginx
+    nginx:
+        image: nginx:alpine
+        restart: no
+        ports:
+            - "8000:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        networks:
+            - laravel
+
+    # db mysql
+    db:
+        image: mysql:8.0
+        platform: linux/x86_64
+        restart: no
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+            MYSQL_PASSWORD: ${DB_PASSWORD:-userpass}
+            MYSQL_USER: ${DB_USERNAME:-username}
+        command: --default-time-zone='America/Sao_Paulo'
+        volumes:
+            - ./.docker/mysql/dbdata:/var/lib/mysql
+        ports:
+            - "3300:3306"
+        networks:
+            - laravel
+
+#    cron:
+#        build:
+#            context: ./docker/cron
+#            dockerfile: Dockerfile
+#        command: ["sh", "-c", "chown root:root /etc/crontabs/root && crond -f"]
+#        volumes:
+#            - ./:/var/www
+#            - ./docker/cron/crontab/:/etc/crontabs/root
+#        networks:
+#            - laravel
+networks:
+    laravel:
+        driver: bridge
