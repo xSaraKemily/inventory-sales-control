@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Events\SaleCompleted;
 use App\Models\Sale;
 use App\Models\SaleItem;
 use Illuminate\Support\Collection;
@@ -18,6 +19,8 @@ class CreateSaleAction
 
         self::updateSaleStatistics($sale);
 
+        SaleCompleted::broadcast($sale);
+
         return $sale;
     }
 
@@ -32,8 +35,8 @@ class CreateSaleAction
         $totalAmount = 0;
 
         $sale->items->each(function (SaleItem $item) use (&$totalAmount, &$totalCost) {
-            $totalAmount += $item->unit_price * $item->quantidade;
-            $totalCost += $item->unit_cost * $item->quantidade;
+            $totalAmount += $item->unit_price * $item->quantity;
+            $totalCost += $item->unit_cost * $item->quantity;
         });
 
         $totalProfit = $totalAmount - $totalCost;
