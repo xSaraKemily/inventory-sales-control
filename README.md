@@ -1,66 +1,141 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📂 API de Controle de Estoque e Vendas
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📝 Propósito  
+Desenvolver uma API REST utilizando Laravel que gerencie um módulo simplificado de controle de estoque e vendas para um ERP.
 
-## About Laravel
+## 🔹 Main Features  
+- Registrar entrada de produtos no estoque com suas respectivas quantidades e preços de custo
+- Consultar o estoque atual com valores totais e lucro projetado
+- Registrar uma venda com diversos itens, calculando automaticamente o a margem de lucro, valor total da venda e valor total de custo
+- Consultar os detalhes de uma venda
+- Testes unitários dos metodos das controllers
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🛠️ Technologies Used  
+- **Aplicação:** PHP 8.2 + Laravel 12
+- **Database:** MySQL
+- **Testes Unitários:** PHPUnit + SQLite  
+- **Infraestrutura:** Docker/Docker Compose  
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# 🚀 Setup e execução
+---
 
-## Learning Laravel
+📌 Esse setup presume que você tenha o Docker/Docker Compose instalado
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Clone o repositório
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```sh
+git clone https://github.com/xSaraKemily/inventory-sales-control.git
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Entrar na pasta do projeto
 
-## Laravel Sponsors
+```sh
+cd inventory-sales-control
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Iniciar os container do projeto
+---
+```sh
+docker-compose up -d
+```
 
-### Premium Partners
+Criar arquivo .env
+---
+```sh
+cp .env.example .env
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Acessar o container do app
+---
+```sh
+docker-compose exec app bash
+```
 
-## Contributing
+Instalar as dependencias do projeto
+---
+```sh
+composer install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Gerar a application key do laravel
+---
+```sh
+php artisan key:generate
+```
 
-## Code of Conduct
+Rodas as migrations
+---
+```sh
+php artisan migrate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Rodas os seeders
+---
+```sh
+php artisan db:seed
+```
 
-## Security Vulnerabilities
+# Coneção com o database
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Host: localhost <br>
+Port: 3300 <br>
+User: username <br>
+password: userpass <br>
+database: laravel
 
-## License
+# Acessar API via Insomnia/Postman
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+URL base: http://localhost:8000
+
+Utilizar os seguintes headers:
+
+- Content-Type = application/json
+- Accept = Accept: application/json
+
+
+Rotas disponíveis:
+
+- POST /api/inventory (Registrar entrada de produtos no estoque)
+- GET /api/inventory (Obter estoques)
+- POST /api/sales (Registrar uma nova venda)
+- GET /api/sales/{id} (Obter detalhes de uma venda específica)
+
+###Exemplo de requisições POST:
+
+Criar varios inventários
+```sh
+{
+    "data": [
+            {
+                    "product_id": "3",
+                    "quantity": 10
+            },
+         {
+                    "product_id": "2",
+                    "quantity": 5
+            }
+    ]
+}
+```
+
+Criar Venda com diversos itens:
+```sh
+{
+    "items": [
+        {
+            "product_id": 1,
+            "unit_price": 10,
+            "unit_cost": 5,
+            "quantity": 10
+        },
+			 {
+            "product_id": 2,
+            "unit_price": 40,
+            "unit_cost": 20,
+            "quantity": 5
+        }
+    ]
+}
+```
+  
