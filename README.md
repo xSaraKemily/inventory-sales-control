@@ -3,14 +3,14 @@
 ## 📝 Propósito  
 Desenvolver uma API REST utilizando Laravel que gerencie um módulo simplificado de controle de estoque e vendas para um ERP.
 
-## 🔹 Main Features  
+## 🔹 Principais Features  
 - Registrar entrada de produtos no estoque com suas respectivas quantidades e preços de custo
 - Consultar o estoque atual com valores totais e lucro projetado
 - Registrar uma venda com diversos itens, calculando automaticamente o a margem de lucro, valor total da venda e valor total de custo
 - Consultar os detalhes de uma venda
 - Testes unitários dos metodos das controllers
 
-## 🛠️ Technologies Used  
+## 🛠️ Tecnologias Utilizadas 
 - **Aplicação:** PHP 8.2 + Laravel 12
 - **Database:** MySQL
 - **Testes Unitários:** PHPUnit + SQLite  
@@ -64,19 +64,19 @@ Gerar a application key do laravel
 php artisan key:generate
 ```
 
-Rodas as migrations
+Rodar migrations
 ---
 ```sh
 php artisan migrate
 ```
 
-Rodas os seeders
+Rodar seeders
 ---
 ```sh
 php artisan db:seed
 ```
 
-# Coneção com o database
+# Conexão com o database
 
 Host: localhost <br>
 Port: 3300 <br>
@@ -89,7 +89,6 @@ database: laravel
 URL base: http://localhost:8000
 
 Utilizar os seguintes headers:
-
 - Content-Type = application/json
 - Accept = Accept: application/json
 
@@ -101,20 +100,20 @@ Rotas disponíveis:
 - POST /api/sales (Registrar uma nova venda)
 - GET /api/sales/{id} (Obter detalhes de uma venda específica)
 
-###Exemplo de requisições POST:
+### Exemplo de requisições POST:
 
 Criar varios inventários
 ```sh
 {
     "data": [
-            {
-                    "product_id": "3",
-                    "quantity": 10
-            },
-         {
-                    "product_id": "2",
-                    "quantity": 5
-            }
+        {
+            "product_id": "3",
+            "quantity": 10
+        },
+        {
+            "product_id": "2",
+            "quantity": 5
+        }
     ]
 }
 ```
@@ -129,7 +128,7 @@ Criar Venda com diversos itens:
             "unit_cost": 5,
             "quantity": 10
         },
-			 {
+        {
             "product_id": 2,
             "unit_price": 40,
             "unit_cost": 20,
