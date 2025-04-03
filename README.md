@@ -84,6 +84,12 @@ User: username <br>
 password: userpass <br>
 database: laravel
 
+# Testes unitários
+---
+```sh
+php artisan test --env=testing
+```
+
 # Acessar API via Insomnia/Postman
 
 URL base: http://localhost:8000
