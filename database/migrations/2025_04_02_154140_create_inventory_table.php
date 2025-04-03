@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->unique()->constrained('products');
             $table->integer('quantity');
-            $table->dateTime('last_updated')->nullable(); //TODO ver
+            $table->dateTime('last_updated')->nullable();
             $table->timestamps();
         });
     }

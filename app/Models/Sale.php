@@ -4,9 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
+/**
+ * App\Models\Sale
+ *
+ * @property int $id
+ * @property float $total_profit
+ * @property float $total_cost
+ * @property float $total_amount
+ * @property string $status
+ * @property-read SaleItem[]|Collection $items
+ */
 class Sale extends Model
 {
+
     protected $fillable = [
         'total_profit',
         'total_cost',
