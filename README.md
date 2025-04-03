@@ -86,7 +86,7 @@ database: laravel
 
 # Testes unitários
 
-<mark> Os testes devem ser rodados no terminal dentro do container do app (entrar em docker-compose exec app bash de após isso, rodar o comando a baixo) </mark>
+Os testes devem ser rodados no terminal <mark> dentro do container do app </mark> (entrar em `docker-compose exec app bash` e, após isso, rodar o comando abaixo). 
 
 ---
 ```sh
