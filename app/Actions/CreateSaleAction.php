@@ -1,25 +1,27 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Actions;
 
-use App\Events\SaleCompleted;
+use App\DTOs\SaleItemDTO;
+use App\Enums\SaleStatusEnum;
+use App\Events\SaleCreated;
 use App\Models\Sale;
-use App\Models\SaleItem;
 use Illuminate\Support\Collection;
 
 class CreateSaleAction
 {
-    public static function execute(Collection $dtos): Sale
+    public static function execute(Collection $itemDtos): Sale
     {
-        $sale = Sale::create();
+        $sale = Sale::create([
+            ...self::calculateSaleTotals($itemDtos),
+            'status' => SaleStatusEnum::COMPLETED
+        ]);
 
         $sale->items()->createMany(
-            self::formatDTOsToArray($dtos)
+            self::formatDTOsToArray($itemDtos)
         );
 
-        self::updateSaleStatistics($sale);
-
-        SaleCompleted::broadcast($sale);
+        SaleCreated::broadcast($sale);
 
         return $sale;
     }
@@ -29,23 +31,22 @@ class CreateSaleAction
         return $dtos->map(fn ($dto) => $dto->toArray())->toArray();
     }
 
-    private static function updateSaleStatistics(Sale $sale): void //TODO: mudar caso seja pra ficar assim, pra fazer o calculo antes de adc os itens
+    private static function calculateSaleTotals(Collection $itemDtos): array
     {
         $totalCost = 0;
         $totalAmount = 0;
 
-        $sale->items->each(function (SaleItem $item) use (&$totalAmount, &$totalCost) {
+        $itemDtos->each(function (SaleItemDTO $item) use (&$totalAmount, &$totalCost) {
             $totalAmount += $item->unit_price * $item->quantity;
             $totalCost += $item->unit_cost * $item->quantity;
         });
 
         $totalProfit = $totalAmount - $totalCost;
 
-        $sale->update([
+        return [
             'total_profit' => $totalProfit,
             'total_cost' => $totalCost,
             'total_amount' => $totalAmount,
-            'status' => 'COMPLETED'
-        ]);
+        ];
     }
 }
