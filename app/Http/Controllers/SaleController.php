@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateSaleAction;
 use App\DTOs\SaleItemDTO;
 use App\Http\Requests\CreateSaleRequest;
-use App\Http\Resources\CreateSaleAction;
 use App\Http\Resources\SaleResource;
 use App\Models\Sale;
 use Exception;
@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Log;
 
 class SaleController extends Controller
 {
-    public function store(CreateSaleRequest $request): SaleResource|JsonResponse|an
+    public function store(CreateSaleRequest $request): SaleResource|JsonResponse
     {
         try {
             $sale = CreateSaleAction::execute(
-                SaleItemDTO::createFromMany($request->input('data'))
+                SaleItemDTO::createFromMany($request->input('items'))
             );
 
             return  response()->json(
