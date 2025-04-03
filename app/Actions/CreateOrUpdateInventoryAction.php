@@ -6,7 +6,7 @@ use App\Models\Inventory;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
-class AddProductOnInventoryAction
+class CreateOrUpdateInventoryAction
 {
     public static function execute(Collection $data): void
     {

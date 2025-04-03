@@ -17,8 +17,6 @@ class Inventory extends Model
         'product_id',
         'quantity',
         'last_updated',
-        'created_at',
-        'updated_at',
     ];
 
     public function product(): BelongsTo

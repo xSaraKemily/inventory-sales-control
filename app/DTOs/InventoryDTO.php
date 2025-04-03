@@ -2,26 +2,19 @@
 
 namespace App\DTOs;
 
-use Illuminate\Support\Collection;
-
-readonly class InventoryProductDTO
+readonly class InventoryDTO extends BaseDTO
 {
     public function __construct(
         public int $product_id,
         public int $quantity
     ) {}
 
-    public static function fromRequest(array $data): self
+    public static function createFrom(array $data): self
     {
         return new self(
-            $data['product_id'],
-            $data['quantity']
+            (int) $data['product_id'],
+            (int) $data['quantity']
         );
-    }
-
-    public static function fromMany(array $data): Collection
-    {
-        return Collection::make($data)->map(fn ($item) => self::fromRequest($item));
     }
 
     public function toArray(): array
