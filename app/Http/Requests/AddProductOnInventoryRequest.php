@@ -15,7 +15,7 @@ class AddProductOnInventoryRequest extends FormRequest
     {
         return [
             'data' => 'required|array',
-            'data.*.product_id' => 'required|string|exists:products,id',
+            'data.*.product_id' => 'required|string|exists:products,id|distinct',
             'data.*.quantity' => 'required|numeric|min:1',
         ];
     }
