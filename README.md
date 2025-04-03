@@ -34,7 +34,7 @@ Entrar na pasta do projeto
 cd inventory-sales-control
 ```
 
-Iniciar os container do projeto
+Iniciar os containers do projeto
 ---
 ```sh
 docker-compose up -d
