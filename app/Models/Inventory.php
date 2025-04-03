@@ -22,8 +22,6 @@ class Inventory extends Model
 {
     use HasFactory;
 
-    protected $table = 'inventory';
-
     protected $casts = [
         'last_updated' => 'datetime',
     ];

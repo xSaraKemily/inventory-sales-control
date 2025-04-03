@@ -36,13 +36,13 @@ class InventoryTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson(['message' => 'Products added successfully']);
 
-        $this->assertDatabaseHas('inventory', [
+        $this->assertDatabaseHas('inventories', [
             'product_id' => $productA->id,
             'quantity' => $quantityA,
             'last_updated' => null,
         ]);
 
-        $this->assertDatabaseHas('inventory', [
+        $this->assertDatabaseHas('inventories', [
             'product_id' => $productB->id,
             'quantity' => $quantityB,
             'last_updated' => null,
@@ -55,12 +55,12 @@ class InventoryTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson(['message' => 'Products added successfully']);
 
-        $this->assertDatabaseHas('inventory', [
+        $this->assertDatabaseHas('inventories', [
             'product_id' => $productA->id,
             'quantity' => $quantityA * 2,
         ]);
 
-        $this->assertDatabaseHas('inventory', [
+        $this->assertDatabaseHas('inventories', [
             'product_id' => $productB->id,
             'quantity' => $quantityB * 2,
         ]);
