@@ -15,17 +15,17 @@ class CreateSaleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'data' => 'required|array',
-            'data.*.product_id' => 'required|exists:products,id|distinct',
-            'data.*.unit_price' => 'required|numeric|min:0.1',
-            'data.*.unit_cost' => 'required|numeric|min:0.1',
-            'data.*.quantity' => [
+            'items' => 'required|array',
+            'items.*.product_id' => 'required|exists:products,id|distinct',
+            'items.*.unit_price' => 'required|numeric|min:0.1',
+            'items.*.unit_cost' => 'required|numeric|min:0.1',
+            'items.*.quantity' => [
                 'required',
                 'integer',
                 'min:1',
                 function ($attribute, $value, $fail) {
                     $index = explode('.', $attribute)[1];
-                    $productId = request()->input("data.$index.product_id");
+                    $productId = request()->input("items.$index.product_id");
 
                     $inventory = Inventory::where('product_id', $productId)->first();
 
