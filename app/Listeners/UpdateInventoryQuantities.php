@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\SaleCompleted;
+use App\Events\SaleCreated;
 use App\Models\SaleItem;
 
 class UpdateInventoryQuantities
@@ -18,7 +18,7 @@ class UpdateInventoryQuantities
     /**
      * Handle the event.
      */
-    public function handle(SaleCompleted $event): void
+    public function handle(SaleCreated $event): void
     {
         $event->sale->items()
             ->whereHas('product.inventory')
