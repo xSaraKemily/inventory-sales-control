@@ -43,17 +43,6 @@ services:
             - "3300:3306"
         networks:
             - laravel
-
-#    cron:
-#        build:
-#            context: ./docker/cron
-#            dockerfile: Dockerfile
-#        command: ["sh", "-c", "chown root:root /etc/crontabs/root && crond -f"]
-#        volumes:
-#            - ./:/var/www
-#            - ./docker/cron/crontab/:/etc/crontabs/root
-#        networks:
-#            - laravel
 networks:
     laravel:
         driver: bridge
